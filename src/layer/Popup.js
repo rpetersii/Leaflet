@@ -35,6 +35,7 @@ import {Path} from './vector/Path';
 
 // @namespace Popup
 export var Popup = DivOverlay.extend({
+	type: 'Popup',
 
 	// @section
 	// @aka Popup options
@@ -305,6 +306,12 @@ export var Popup = DivOverlay.extend({
 export var popup = function (options, source) {
 	return new Popup(options, source);
 };
+
+Object.defineProperty(Popup, Symbol.hasInstance, {
+	value: function (instance) {
+		return !!(instance.type === 'Popup');
+	}
+});
 
 
 /* @namespace Map

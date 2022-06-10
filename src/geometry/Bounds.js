@@ -171,3 +171,9 @@ export function toBounds(a, b) {
 	}
 	return new Bounds(a, b);
 }
+
+Object.defineProperty(Bounds, Symbol.hasInstance, {
+	value: function (instance) {
+		return !!(instance.min && instance.max);
+	}
+});

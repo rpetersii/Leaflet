@@ -29,6 +29,7 @@ import * as Util from '../core/Util';
 
 // @namespace Tooltip
 export var Tooltip = DivOverlay.extend({
+	type: 'Tooltip',
 
 	// @section
 	// @aka Tooltip options
@@ -204,6 +205,13 @@ export var Tooltip = DivOverlay.extend({
 export var tooltip = function (options, source) {
 	return new Tooltip(options, source);
 };
+
+Object.defineProperty(Tooltip, Symbol.hasInstance, {
+	value: function (instance) {
+		return !!(instance.type === 'Tooltip');
+	}
+});
+
 
 // @namespace Map
 // @section Methods for Layers and Controls

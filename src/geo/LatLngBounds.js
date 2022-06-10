@@ -249,3 +249,10 @@ export function toLatLngBounds(a, b) {
 	}
 	return new LatLngBounds(a, b);
 }
+
+Object.defineProperty(LatLngBounds, Symbol.hasInstance, {
+	value: function (instance) {
+		return !!(instance._southWest && instance._northEast);
+	}
+});
+
