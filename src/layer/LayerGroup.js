@@ -25,7 +25,7 @@ export var LayerGroup = Layer.extend({
 	initialize: function (layers, options) {
 		Util.setOptions(this, options);
 
-		this._layers = {};
+		this._layers = [];
 
 		var i, len;
 
@@ -39,14 +39,13 @@ export var LayerGroup = Layer.extend({
 	// @method addLayer(layer: Layer): this
 	// Adds the given layer to the group.
 	addLayer: function (layer) {
-		var id = this.getLayerId(layer);
-
-		this._layers[id] = layer;
+		this.getLayerId(layer);
 
 		if (this._map) {
 			this._map.addLayer(layer);
 		}
 
+		this._layers.push(layer);
 		return this;
 	},
 
@@ -56,13 +55,15 @@ export var LayerGroup = Layer.extend({
 	// @method removeLayer(id: Number): this
 	// Removes the layer with the given internal ID from the group.
 	removeLayer: function (layer) {
-		var id = layer in this._layers ? layer : this.getLayerId(layer);
 
-		if (this._map && this._layers[id]) {
-			this._map.removeLayer(this._layers[id]);
+		let ix = this._layers.indexOf(layer);
+
+		if (this._map && this._layers[ix]) {
+			this._map.removeLayer(layer);
 		}
-
-		delete this._layers[id];
+		if (ix) {
+			delete this._layers[ix];
+		}
 
 		return this;
 	},
@@ -73,8 +74,7 @@ export var LayerGroup = Layer.extend({
 	// @method hasLayer(id: Number): Boolean
 	// Returns `true` if the given internal ID is currently added to the group.
 	hasLayer: function (layer) {
-		var layerId = typeof layer === 'number' ? layer : this.getLayerId(layer);
-		return layerId in this._layers;
+		return this.indexOf(layer) !== -1;
 	},
 
 	// @method clearLayers(): this
@@ -146,8 +146,9 @@ export var LayerGroup = Layer.extend({
 
 	// @method getLayerId(layer: Layer): Number
 	// Returns the internal ID for a layer
+	// creates one if one doesnt exist
 	getLayerId: function (layer) {
-		return Util.stamp(layer);
+		return  L.Util.stamp(layer);
 	}
 });
 

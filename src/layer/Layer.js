@@ -28,6 +28,7 @@ import * as Util from '../core/Util';
 
 
 export var Layer = Evented.extend({
+	type: 'Layer',
 
 	// Classes extending `L.Layer` will inherit the following options:
 	options: {
@@ -159,9 +160,23 @@ Map.include({
 			throw new Error('The provided object is not a Layer.');
 		}
 
-		var id = Util.stamp(layer);
-		if (this._layers[id]) { return this; }
+		var id = Util.getStamp(layer);
+		if (id && this._layers[id]) {
+			var prevLayer = this._layers[id];
+			console.debug('addLayer layer is already present: ' + id);
+			if (prevLayer === layer) {
+				console.debug('layer is correct: ' + id);
+				return this;
+			} else {
+				console.error('addLayer did not match: ' + id);
+			}
+		}
+		id = Util.newStamp(layer);
 		this._layers[id] = layer;
+		if (id !== layer['_leaflet_id']) {
+			console.error('addLayer corrupted: ' + id);
+		}
+		console.debug('addLayer ' + id);
 
 		layer._mapToAdd = this;
 
@@ -177,9 +192,12 @@ Map.include({
 	// @method removeLayer(layer: Layer): this
 	// Removes the given layer from the map.
 	removeLayer: function (layer) {
-		var id = Util.stamp(layer);
-
-		if (!this._layers[id]) { return this; }
+		var id = Util.getStamp(layer);
+		console.debug('removeLayer: ' + id);
+		if (!this._layers[id]) {
+			console.debug('removeLayer layer not found: ' + id);
+			return this;
+		}
 
 		if (this._loaded) {
 			layer.onRemove(this);
@@ -200,7 +218,7 @@ Map.include({
 	// @method hasLayer(layer: Layer): Boolean
 	// Returns `true` if the given layer is currently added to the map
 	hasLayer: function (layer) {
-		return Util.stamp(layer) in this._layers;
+		return this._layers[Util.getStamp(layer)];
 	},
 
 	/* @method eachLayer(fn: Function, context?: Object): this

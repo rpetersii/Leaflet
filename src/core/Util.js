@@ -53,9 +53,18 @@ export var lastId = 0;
 // Returns the unique ID of an object, assigning it one if it doesn't have it.
 export function stamp(obj) {
 	if (!('_leaflet_id' in obj)) {
-		obj['_leaflet_id'] = ++lastId;
+		return newStamp(obj);
 	}
-	return obj._leaflet_id;
+	return obj['_leaflet_id'];
+}
+
+export function newStamp(obj) {
+	obj['_leaflet_id'] = ++lastId;
+	console.debug('stamped obj with: ' + lastId);
+	return obj['_leaflet_id'];
+}
+export function getStamp(obj) {
+	return obj['_leaflet_id'];
 }
 
 // @function throttle(fn: Function, time: Number, context: Object): Function
