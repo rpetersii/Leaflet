@@ -55,7 +55,10 @@ export var LayerGroup = Layer.extend({
 	// @method removeLayer(id: Number): this
 	// Removes the layer with the given internal ID from the group.
 	removeLayer: function (layer) {
-
+		// if (layer instanceof Number) {
+		// 	// eslint-disable-next-line no-debugger
+		// 	debugger;
+		// }
 		let ix = this._layers.indexOf(layer);
 
 		if (this._map && this._layers[ix]) {
@@ -74,7 +77,7 @@ export var LayerGroup = Layer.extend({
 	// @method hasLayer(id: Number): Boolean
 	// Returns `true` if the given internal ID is currently added to the group.
 	hasLayer: function (layer) {
-		return this.indexOf(layer) !== -1;
+		return this._layers.indexOf(layer) !== -1;
 	},
 
 	// @method clearLayers(): this

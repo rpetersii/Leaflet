@@ -43,9 +43,6 @@ export var FeatureGroup = LayerGroup.extend({
 		if (!this.hasLayer(layer)) {
 			return this;
 		}
-		if (layer in this._layers) {
-			layer = this._layers[layer];
-		}
 
 		layer.removeEventParent(this);
 
