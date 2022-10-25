@@ -60,7 +60,7 @@ export function stamp(obj) {
 
 export function newStamp(obj) {
 	obj['_leaflet_id'] = ++lastId;
-	console.debug('stamped obj with: ' + lastId);
+	// console.debug('stamped obj with: ' + lastId);
 	return obj['_leaflet_id'];
 }
 export function getStamp(obj) {

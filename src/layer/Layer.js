@@ -163,9 +163,9 @@ Map.include({
 		var id = Util.getStamp(layer);
 		if (id && this._layers[id]) {
 			var prevLayer = this._layers[id];
-			console.debug('addLayer layer is already present: ' + id);
+			// console.debug('addLayer layer is already present: ' + id);
 			if (prevLayer === layer) {
-				console.debug('layer is correct: ' + id);
+				// console.debug('layer is correct: ' + id);
 				return this;
 			} else {
 				console.error('addLayer did not match: ' + id);
@@ -176,7 +176,7 @@ Map.include({
 		if (id !== layer['_leaflet_id']) {
 			console.error('addLayer corrupted: ' + id);
 		}
-		console.debug('addLayer ' + id);
+		// console.debug('addLayer ' + id);
 
 		layer._mapToAdd = this;
 
@@ -193,7 +193,7 @@ Map.include({
 	// Removes the given layer from the map.
 	removeLayer: function (layer) {
 		var id = Util.getStamp(layer);
-		console.debug('removeLayer: ' + id);
+		// console.debug('removeLayer: ' + id);
 		if (!this._layers[id]) {
 			console.debug('removeLayer layer not found: ' + id);
 			return this;
