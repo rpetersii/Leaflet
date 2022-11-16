@@ -163,9 +163,9 @@ Map.include({
 		var id = Util.getStamp(layer);
 		if (id && this._layers[id]) {
 			var prevLayer = this._layers[id];
-			// console.debug('addLayer layer is already present: ' + id);
+			console.debug('addLayer layer is already present: ' + id);
 			if (prevLayer === layer) {
-				// console.debug('layer is correct: ' + id);
+				console.debug('layer is correct: ' + id);
 				return this;
 			} else {
 				console.error('addLayer did not match: ' + id);
